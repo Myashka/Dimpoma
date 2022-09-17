@@ -1,0 +1,18 @@
+repos:
+-   repo: https://github.com/psf/black
+    rev: 22.8.0
+    hooks:
+      - id: black
+        language_version: python3.10
+-   repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        name: isort (python)
+-   repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.4.0
+    hooks:
+      - id: nbqa-black
+      - id: nbqa-pyupgrade
+        args: [--py36-plus]
+      - id: nbqa-isort
