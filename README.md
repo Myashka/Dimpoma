@@ -1,4 +1,4 @@
-# Dimpoma
+# Diploma
 Diploma work for specific domain QA.
 
 ## [Notebooks](https://github.com/Myashka/Dimpoma/tree/master/Notebooks)
