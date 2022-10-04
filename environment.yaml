@@ -1,0 +1,7 @@
+name: venv
+dependencies:
+  - python>=3.9.0
+  - anaconda
+  - pip
+  - pip:
+      - -r file:requirements.txt

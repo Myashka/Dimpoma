@@ -1,0 +1,23 @@
+{
+    "os": "Windows-10-10.0.19044-SP0",
+    "python": "3.10.4",
+    "heartbeatAt": "2022-10-03T12:51:26.719979",
+    "startedAt": "2022-10-03T12:51:25.933418",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 2070 SUPER",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": null,
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/Myashka/Diploma.git",
+        "commit": "5c89fc3ddc18ba3fdc345f26709d90d831057dfc"
+    },
+    "email": "filimonshacs@mail.ru",
+    "root": "D:/GorbatovskiAlexey/Study/Diploma",
+    "host": "14-433-0",
+    "username": "user",
+    "executable": "C:\\Users\\user\\miniconda3\\envs\\venv\\python.exe"
+}
