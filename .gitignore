@@ -2,5 +2,6 @@
 **/StackSample
 **/data/raw
 **/results
-**/data
 **/wandb
+**/.zip
+/data
