@@ -45,6 +45,8 @@ class Q_A_Dataset(Dataset):
         self.questions = []
         self.titles = []
 
+        self.max_answer_length = 0
+
         for _, row in df.iterrows():
 
             prep_text = ""
@@ -74,6 +76,10 @@ class Q_A_Dataset(Dataset):
             self.answers.append(row.A_Body)
             self.questions.append(row.Q_Body)
             self.titles.append(row.Q_Title)
+
+            answer_tokens_length = len(tokenizer.encode(row.A_Body))
+            if self.max_answer_length <= answer_tokens_length:
+                self.max_answer_length = answer_tokens_length
 
     def __len__(self):
         return len(self.input_ids)
@@ -164,6 +170,7 @@ class Evaluator:
         use_title=False,
         use_question=True,
         temp=0,
+        max_answer_length=500
     ):
         self.model.eval()
 
@@ -190,6 +197,7 @@ class Evaluator:
             num_return_sequences=0,
             no_repeat_ngram_size=2,
             pad_token_id=self.tokenizer.eos_token_id,
+            max_new_tokens = max_answer_length
         ).to("cpu")
 
         del enc_text_to_answer
@@ -213,6 +221,8 @@ class Evaluator:
         use_question=True,
         temp=0,
     ):
+        self.max_answer_length = test_dataset.max_answer_length
+
         bleu_scores = []
         rouge_scores = []
         bert_precisions = []
@@ -247,6 +257,7 @@ class Evaluator:
                 use_title,
                 use_question,
                 temp,
+                self.max_answer_length
             )
 
             rouge_score = self.metrics["rouge"](
