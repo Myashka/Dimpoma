@@ -30,3 +30,11 @@
 За основу взяты regex из [статьи](https://link.springer.com/article/10.1007/s10664-019-09758-x)
 
 Сами файлы можно найти [здесь](https://figshare.com/articles/online_resource/qc_replication_package_zip/8870123/1)
+
+## Part 4
+
+- Сделана эвалуацию базовой GPT neo на случайно из data part 4, включающей 500 экземпляров (API Usage category, <=200 length)
+- Отобраны экземпляры, имеющие наименьшее косинусное расстояние Q_title и Q_Body
+- Сделана эвалуация базовой модели на отобранной выборке
+- Произведены сравнения результатов
+-Кластеризация [BERTOflow](https://github.com/lanwuwei/BERTOverflow) embeddings

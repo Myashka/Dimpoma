@@ -1,12 +1,11 @@
 import numpy as np
 import torch
+import wandb
 from datasets import load_metric
 from evaluate import load
+from nltk.translate.bleu_score import sentence_bleu
 from torch.utils.data import Dataset
 from tqdm.auto import tqdm
-import wandb
-
-from nltk.translate.bleu_score import sentence_bleu
 
 
 class Q_A_Dataset(Dataset):
@@ -149,7 +148,9 @@ class Evaluator:
         self.device = torch.device("cuda") if torch.cuda.is_available else "cpu"
 
         if wandb_run is not None:
-            self.test_predictions = wandb.Artifact(f"{run_table_name}", type="run_table")
+            self.test_predictions = wandb.Artifact(
+                f"{run_table_name}", type="run_table"
+            )
 
         rouge = load_metric("rouge")
         bertscore = load("bertscore")
@@ -170,7 +171,7 @@ class Evaluator:
         use_title=False,
         use_question=True,
         temp=0,
-        max_answer_length=500
+        max_answer_length=500,
     ):
         self.model.eval()
 
@@ -197,7 +198,7 @@ class Evaluator:
             num_return_sequences=0,
             no_repeat_ngram_size=2,
             pad_token_id=self.tokenizer.eos_token_id,
-            max_new_tokens = max_answer_length
+            max_new_tokens=max_answer_length,
         ).to("cpu")
 
         del enc_text_to_answer
@@ -257,7 +258,7 @@ class Evaluator:
                 use_title,
                 use_question,
                 temp,
-                self.max_answer_length
+                self.max_answer_length,
             )
 
             rouge_score = self.metrics["rouge"](
@@ -278,21 +279,19 @@ class Evaluator:
             bert_recalls.append(bert_score["recall"][0])
             bert_f1s.append(bert_score["f1"][0])
 
-            if self.run is not None:
-                text_table.add_data(
-                    title,
-                    question,
-                    generated_answer,
-                    answer,
-                    bert_score["precision"][0],
-                    bert_score["recall"][0],
-                    bert_score["f1"][0],
-                    rouge_score,
-                    bleu_score,
-                )
-                self.test_predictions.add(text_table, f"{eval_filename}")
+            text_table.add_data(
+                title,
+                question,
+                generated_answer,
+                answer,
+                bert_score["precision"][0],
+                bert_score["recall"][0],
+                bert_score["f1"][0],
+                rouge_score,
+                bleu_score,
+            )
+            self.test_predictions.add(text_table, f"{eval_filename}")
 
-        if self.run is not None:
             self.run.log_artifact(self.test_predictions)
 
         return (
