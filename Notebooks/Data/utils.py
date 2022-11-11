@@ -142,6 +142,20 @@ class Evaluator:
 
         if wandb_run is not None:
             self.run = wandb_run
+            self.text_table = wandb.Table(
+                columns=[
+                    "title",
+                    "question",
+                    "generated_answer",
+                    "original_answer",
+                    "bert_precision",
+                    "bert_recall",
+                    "bert_f1",
+                    "rouge_score",
+                    "bleu_score",
+                ]
+            )
+
         self.model = model
         self.tokenizer = tokenizer
 
@@ -232,21 +246,6 @@ class Evaluator:
 
         self.model.eval()
 
-        if self.run is not None:
-            text_table = wandb.Table(
-                columns=[
-                    "title",
-                    "question",
-                    "generated_answer",
-                    "original_answer",
-                    "bert_precision",
-                    "bert_recall",
-                    "bert_f1",
-                    "rouge_score",
-                    "bleu_score",
-                ]
-            )
-
         for _, _, _, answer, question, title in tqdm(test_dataset):
 
             generated_answer = self._generate_answer(
@@ -279,7 +278,7 @@ class Evaluator:
             bert_recalls.append(bert_score["recall"][0])
             bert_f1s.append(bert_score["f1"][0])
 
-            text_table.add_data(
+            self.text_table.add_data(
                 title,
                 question,
                 generated_answer,
@@ -290,7 +289,7 @@ class Evaluator:
                 rouge_score,
                 bleu_score,
             )
-            self.test_predictions.add(text_table, f"{eval_filename}")
+            self.test_predictions.add(self.text_table, f"{eval_filename}")
 
             self.run.log_artifact(self.test_predictions)
 
