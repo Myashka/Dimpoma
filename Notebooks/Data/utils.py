@@ -1,7 +1,6 @@
 import numpy as np
 import torch
 import wandb
-from datasets import load_metric
 from evaluate import load
 from nltk.translate.bleu_score import sentence_bleu
 from torch.utils.data import Dataset
@@ -138,10 +137,10 @@ def collate_batch(examples, tokenizer, input_type="input_ids"):
 
 
 class Evaluator:
-    def __init__(self, wandb_run, model, tokenizer, run_table_name) -> None:
+    def __init__(self, artefact, model, tokenizer) -> None:
 
-        if wandb_run is not None:
-            self.run = wandb_run
+        if artefact is not None:
+            self.artefact = artefact
             self.text_table = wandb.Table(
                 columns=[
                     "title",
@@ -161,12 +160,7 @@ class Evaluator:
 
         self.device = torch.device("cuda") if torch.cuda.is_available else "cpu"
 
-        if wandb_run is not None:
-            self.test_predictions = wandb.Artifact(
-                f"{run_table_name}", type="run_table"
-            )
-
-        rouge = load_metric("rouge")
+        rouge = load("rouge")
         bertscore = load("bertscore")
 
         self.metrics = {
@@ -231,7 +225,6 @@ class Evaluator:
         promt_1,
         promt_2,
         promt_3,
-        eval_filename,
         use_title=False,
         use_question=True,
         temp=0,
@@ -289,11 +282,9 @@ class Evaluator:
                 rouge_score,
                 bleu_score,
             )
-            self.test_predictions.add(self.text_table, f"{eval_filename}")
-
-            self.run.log_artifact(self.test_predictions)
 
         return (
+            self.text_table,
             np.mean(bleu_scores),
             np.mean(rouge_scores),
             np.mean(bert_precisions),
