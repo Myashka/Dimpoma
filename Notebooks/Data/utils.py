@@ -255,7 +255,7 @@ class Evaluator:
 
             rouge_score = self.metrics["rouge"](
                 predictions=[generated_answer], references=[answer]
-            )["rouge1"].mid.fmeasure
+            )["rougeLsum"]
 
             bert_score = self.metrics["bertscore"](
                 predictions=[generated_answer], references=[answer], lang="en"
