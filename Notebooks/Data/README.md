@@ -33,8 +33,7 @@
 
 ## Part 4
 
-- Сделана эвалуацию базовой GPT neo на случайно из data part 4, включающей 500 экземпляров (API Usage category, <=200 length)
+- Сделана эвалуацию базовой GPT neo на случайно из data part 4, включающей 105, либо 500 экземпляров (API Usage category, <=200 length)
 - Отобраны экземпляры, имеющие наименьшее косинусное расстояние Q_title и Q_Body
 - Сделана эвалуация базовой модели на отобранной выборке
-- Произведены сравнения результатов
--Кластеризация [BERTOflow](https://github.com/lanwuwei/BERTOverflow) embeddings
+- Произведены сравнения результатов (Notebooks/GPT_neo_analys_3.ipynb)
