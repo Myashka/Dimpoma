@@ -1,0 +1,129 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Code_Block", "label": "Q_Code_Block", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Code_Block (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Website", "label": "Q_Website", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Website (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Variable", "label": "Q_Variable", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Variable (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Function", "label": "Q_Function", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Function (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Data_Type", "label": "Q_Data_Type", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Data_Type (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Language", "label": "Q_Language", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Language (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Value", "label": "T_Value", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Value (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Data_Structure", "label": "T_Data_Structure", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Data_Structure (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Output_Block", "label": "T_Output_Block", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Output_Block (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_File_Name", "label": "T_File_Name", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_File_Name (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_User_Interface_Element", "label": "T_User_Interface_Element", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_User_Interface_Element (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Library", "label": "T_Library", "level": 0, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Library (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Website", "label": "T_Website", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Website (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Function", "label": "T_Function", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Function (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Data_Type", "label": "T_Data_Type", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Data_Type (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Language", "label": "T_Language", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Language (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Variable", "label": "T_Variable", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Variable (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Data_Structure", "label": "Q_Data_Structure", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Data_Structure (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Code_Block", "label": "T_Code_Block", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Code_Block (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_File_Name", "label": "Q_File_Name", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_File_Name (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_User_Interface_Element", "label": "Q_User_Interface_Element", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_User_Interface_Element (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Library", "label": "Q_Library", "level": 1, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Library (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_File_Type", "label": "Q_File_Type", "level": 2, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_File_Type (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Application", "label": "Q_Application", "level": 2, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Application (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Version", "label": "T_Version", "level": 2, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Version (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_File_Type", "label": "T_File_Type", "level": 3, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_File_Type (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Application", "label": "T_Application", "level": 3, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Application (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Version", "label": "Q_Version", "level": 3, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Version (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Error_Name", "label": "T_Error_Name", "level": 4, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Error_Name (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Operating_System", "label": "Q_Operating_System", "level": 4, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Operating_System (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Error_Name", "label": "Q_Error_Name", "level": 5, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Error_Name (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Operating_System", "label": "T_Operating_System", "level": 5, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Operating_System (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Class", "label": "T_Class", "level": 6, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Class (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Class", "label": "Q_Class", "level": 7, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Class (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "T_Device", "label": "T_Device", "level": 8, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 T_Device (Discrete)"}, {"color": "#2ca02c", "font": {"size": 36}, "id": "Q_Device", "label": "Q_Device", "level": 9, "shape": "dot", "size": 45, "title": "\u0423\u0437\u0435\u043b \u0431\u0430\u0439\u0435\u0441\u043e\u0432\u0441\u043a\u043e\u0439 \u0441\u0435\u0442\u0438 Q_Device (Discrete)"}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "Q_Code_Block", "to": "T_Code_Block"}, {"arrows": "to", "from": "Q_Website", "to": "T_Website"}, {"arrows": "to", "from": "Q_Variable", "to": "T_Variable"}, {"arrows": "to", "from": "Q_Function", "to": "T_Function"}, {"arrows": "to", "from": "Q_Data_Type", "to": "T_Data_Type"}, {"arrows": "to", "from": "Q_Language", "to": "T_Language"}, {"arrows": "to", "from": "T_Value", "to": "T_Variable"}, {"arrows": "to", "from": "T_Data_Structure", "to": "Q_Data_Structure"}, {"arrows": "to", "from": "T_Output_Block", "to": "T_Code_Block"}, {"arrows": "to", "from": "T_File_Name", "to": "Q_File_Name"}, {"arrows": "to", "from": "T_User_Interface_Element", "to": "Q_User_Interface_Element"}, {"arrows": "to", "from": "T_Library", "to": "Q_Library"}, {"arrows": "to", "from": "Q_File_Name", "to": "Q_File_Type"}, {"arrows": "to", "from": "Q_User_Interface_Element", "to": "Q_Application"}, {"arrows": "to", "from": "Q_Library", "to": "T_Version"}, {"arrows": "to", "from": "Q_File_Type", "to": "T_File_Type"}, {"arrows": "to", "from": "Q_Application", "to": "T_Application"}, {"arrows": "to", "from": "T_Version", "to": "Q_Version"}, {"arrows": "to", "from": "T_File_Type", "to": "T_Error_Name"}, {"arrows": "to", "from": "T_Application", "to": "T_Class"}, {"arrows": "to", "from": "Q_Version", "to": "Q_Operating_System"}, {"arrows": "to", "from": "T_Error_Name", "to": "Q_Error_Name"}, {"arrows": "to", "from": "Q_Operating_System", "to": "T_Operating_System"}, {"arrows": "to", "from": "T_Operating_System", "to": "T_Class"}, {"arrows": "to", "from": "T_Class", "to": "Q_Class"}, {"arrows": "to", "from": "Q_Class", "to": "T_Device"}, {"arrows": "to", "from": "T_Device", "to": "Q_Device"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "layout": {
+        "hierarchical": {
+            "blockShifting": true,
+            "edgeMinimization": true,
+            "enabled": true,
+            "levelSeparation": 150,
+            "parentCentralization": true,
+            "sortMethod": "hubsize",
+            "treeSpacing": 200
+        },
+        "improvedLayout": true,
+        "randomSeed": 0
+    },
+    "physics": {
+        "enabled": true,
+        "hierarchicalRepulsion": {
+            "centralGravity": 0.5,
+            "damping": 0.09,
+            "nodeDistance": 300,
+            "springConstant": 0.01,
+            "springLength": 100
+        },
+        "solver": "hierarchicalRepulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

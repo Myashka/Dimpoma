@@ -22,8 +22,9 @@
 
 - Отобраны ответы с тегом _Android_
 - Выбраны только лучшие ответы на каждый вопрос и вопросы имеющие score > 1
-- Выбраны ответы ограниченной длины
+- Выбраны ответы ограниченной длины (150 и 200)
 - Использованы regex для классификации выпросов на темы
+- Данные сохранены в _df_200.csv_ и _df_150.csv_
 
 ### Классификация regex
 
@@ -34,6 +35,6 @@
 ## Part 4
 
 - Сделана эвалуацию базовой GPT neo на случайной выборке из датасета, включающего 105, либо 500 экземпляров (API Usage category, <=200 length)
-- Отобраны экземпляры, имеющие наименьшее косинусное расстояние Q_title и Q_Body, используя [BERToflow](https://github.com/lanwuwei/BERTOverflow) или [StackOverFlow MPnet](https://huggingface.co/flax-sentence-embeddings/stackoverflow_mpnet-base)
-- Сделана эвалуация базовой модели на отобранной выборке различными promts
+- Отобраны экземпляры, имеющие наименьшее косинусное расстояние Q_title и Q_Body, используя [BERToflow](https://github.com/lanwuwei/BERTOverflow) или [StackOverFlow MPnet](https://huggingface.co/flax-sentence-embeddings/stackoverflow_mpnet-base), информация добавлена в _df_200.csv_
+- Сделана эвалуация базовой модели на случайной, хорошей и плохих выборках с различными promts
 - Произведены сравнения результатов (Notebooks/GPT_neo_analys_3.ipynb)
